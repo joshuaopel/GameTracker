@@ -17,8 +17,38 @@
     </div>
 
     <div id="rosterToolContainer" style="display: none;">
-        <!-- Add your roster tool content here -->
+        <!-- Add Player Form -->
+        <div>
+            <h2>Add Player</h2>
+            <input type="text" id="playerName" placeholder="Player Name">
+            <input type="text" id="playerAbbr" placeholder="Player Abbreviation">
+            <button id="addPlayerBtn">Add Player</button>
+        </div>
+    
+        <!-- Player List -->
+        <div>
+            <h2>Player List</h2>
+            <ul id="playerList"></ul>
+        </div>
+    
+        <!-- Game Controls -->
+        <div>
+            <h2>Game Controls</h2>
+            <input type="number" id="gameLength" placeholder="Game Length">
+            <input type="number" id="halftimeLength" placeholder="Halftime Length">
+            <button id="startGameBtn">Start Game</button>
+            <button id="pauseGameBtn">Pause Game</button>
+            <button id="endGameBtn">End Game</button>
+        </div>
+    
+        <!-- Game Information -->
+        <div>
+            <h2>Game Information</h2>
+            <p id="gameStatus">Game Status: Not Started</p>
+            <p id="gameTime">Game Time: 0:00</p>
+        </div>
     </div>
+    
     
 
     <script src="scripts.js"></script>
