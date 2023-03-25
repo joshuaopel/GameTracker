@@ -3,61 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soccer Roster Tool</title>
+    <title>Soccer Game Tool</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="login-container">
-        <h1>Soccer Roster Tool</h1>
-        <form id="login-form">
-            <label for="passcode">Enter passcode:</label>
-            <input type="password" id="passcode" name="passcode">
-            <button type="submit">Login</button>
-        </form>
+    <div id="login" class="container">
+        <h1>Login</h1>
+        <input type="password" id="password" placeholder="Enter Password">
+        <button id="loginBtn">Login</button>
     </div>
-
-    <div id="rosterToolContainer" style="display: none;">
-        <!-- Add Player Form -->
-        <div>
-            <h2>Add Player</h2>
-            <input type="text" id="playerName" placeholder="Player Name">
-            <input type="text" id="playerAbbr" placeholder="Player Abbreviation">
-            <button id="addPlayerBtn">Add Player</button>
+    <div id="app" class="container" style="display:none;">
+        <h1>Soccer Game Tool</h1>
+        <button id="startGame">Start Game</button>
+        <button id="pauseGame" disabled>Pause Game</button>
+        <button id="endGame" disabled>End Game</button>
+        <div id="players">
         </div>
-    
-        <!-- Player List -->
-        <div>
-            <h2>Player List</h2>
-            <ul id="playerList"></ul>
-        </div>
-    
-        <!-- Game Controls -->
-        <div>
-            <h2>Game Controls</h2>
-            <input type="number" id="gameLength" placeholder="Game Length">
-            <input type="number" id="halftimeLength" placeholder="Halftime Length">
-            <button id="startGameBtn">Start Game</button>
-            <button id="pauseGameBtn">Pause Game</button>
-            <button id="endGameBtn">End Game</button>
-        </div>
-    
-        <!-- Game Information -->
-        <div>
-            <h2>Game Information</h2>
-            <p id="gameStatus">Game Status: Not Started</p>
-            <p id="gameTime">Game Time: 0:00</p>
+        <button id="saveGame" disabled>Save Game</button>
+        <h2>Game History</h2>
+        <div id="gameHistory">
         </div>
     </div>
-    
-    
-
-    <script src="scripts.js"></script>
-    <!-- Add other scripts -->
-    <script src="playerManager.js"></script>
-    <script src="timerManager.js"></script>
-    <script src="gameManager.js"></script>
-    <script src="indexedDBManager.js"></script>
-    <script src="positionManager.js"></script>
-    <script src="uiManager.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
