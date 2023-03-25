@@ -102,6 +102,7 @@ loginBtn.addEventListener("click", () => {
     }
 });
 
+
 startGame.addEventListener("click", () => {
     gameInProgress = true;
     gamePaused = false;
