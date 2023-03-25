@@ -72,11 +72,11 @@ function updateGameHistory() {
 function updatePlayerDisplay(player, playerDiv) {
     playerDiv.innerHTML = `
         <h3>${player.name}</h3>
-        <button class="togglePlay" ${player.playing ? "disabled" : ""}>Play</button>
-        <select class="position" ${player.playing ? "disabled" : ""}>
+        <button class="togglePlay" ${player.playing || !gameInProgress ? "disabled" : ""}>Play</button>
+        <select class="position" ${player.playing || !gameInProgress ? "disabled" : ""}>
             ${positions.map((pos) => `<option ${player.position === pos ? "selected" : ""}>${pos}</option>`).join("")}
         </select>
-        <button class="toggleBench" ${!player.playing ? "disabled" : ""}>${player.benchStart ? "Unbench" : "Bench"}</button>
+        <button class="toggleBench" ${!player.playing || !gameInProgress ? "disabled" : ""}>${player.benchStart ? "Unbench" : "Bench"}</button>
         <p>Play Time: ${player.playTime} seconds</p>
         <p>Bench Time: ${player.benchTime} seconds</p>
     `;
@@ -136,6 +136,9 @@ startGame.addEventListener("click", () => {
 
     setInterval(() => {
         if (!gameInProgress || gamePaused) return;
+
+        gameTime++;
+        updateGameTimeDisplay();
 
         players.forEach((player, index) => {
             if (player.playing && !player.benchStart) {
