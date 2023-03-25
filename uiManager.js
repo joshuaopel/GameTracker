@@ -3,6 +3,23 @@ class UIManager {
         this.setupEventListeners();
     }
 
+    checkPasscode() {
+        const passcodeInput = document.getElementById('passcodeInput');
+        const messageContainer = document.getElementById('messageContainer');
+        const message = document.getElementById('message');
+        const passcodeContainer = document.getElementById('passcodeContainer');
+        const rosterToolContainer = document.getElementById('rosterToolContainer');
+
+        if (passcodeInput.value === PASSCODE) {
+            messageContainer.style.display = 'none';
+            passcodeContainer.style.display = 'none';
+            rosterToolContainer.style.display = 'block';
+        } else {
+            messageContainer.style.display = 'block';
+            message.textContent = 'Incorrect passcode. Please try again.';
+        }
+    }
+
     setupEventListeners() {
         // Assuming you have elements with these IDs in your HTML
         const addPlayerBtn = document.getElementById('addPlayerBtn');
