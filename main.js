@@ -82,30 +82,46 @@ function updatePlayerDisplay(player, playerDiv) {
     `;
 }
 
+function updatePlayerDisplay(player, playerDiv) {
+    playerDiv.querySelector(".togglePlay").disabled = player.playing || !gameInProgress;
+    playerDiv.querySelector(".position").disabled = player.playing || !gameInProgress;
+    playerDiv.querySelector(".toggleBench").disabled = !player.playing || !gameInProgress;
+    playerDiv.querySelector(".position").value = player.position;
+    playerDiv.querySelector(".playTime").textContent = `Play Time: ${player.playTime} seconds`;
+    playerDiv.querySelector(".benchTime").textContent = `Bench Time: ${player.benchTime} seconds`;
+}
+
 function createPlayerDiv(player) {
     const playerDiv = document.createElement("div");
     playerDiv.classList.add("player");
 
-    updatePlayerDisplay(player, playerDiv);
-
-    playerDiv.querySelector(".togglePlay").addEventListener("click", () => {
+    const playBtn = document.createElement("button");
+    playBtn.classList.add("togglePlay");
+    playBtn.textContent = "Play";
+    playBtn.addEventListener("click", () => {
         player.playing = true;
         player.benchStart = null;
         updatePlayerDisplay(player, playerDiv);
     });
 
-    playerDiv.querySelector(".position").addEventListener("change", (e) => {
+    const positionSelect = document.createElement("select");
+    positionSelect.classList.add("position");
+    positions.forEach((position) => {
+        const option = document.createElement("option");
+        option.value = position;
+        option.textContent = position;
+        positionSelect.appendChild(option);
+    });
+    positionSelect.value = player.position;
+    positionSelect.addEventListener("change", (e) => {
         player.position = e.target.value;
     });
 
-    playerDiv.querySelector(".toggleBench").addEventListener("click", () => {
-        if (player.benchStart) {
-            player.benchStart = null;
-        } else {
-            player.benchStart = new Date();
-        }
-        updatePlayerDisplay(player, playerDiv);
-    });
+    playerDiv.appendChild(playBtn);
+    playerDiv.appendChild(positionSelect);
+    playerDiv.appendChild(benchBtn);
+    playerDiv.appendChild(playTime);
+    playerDiv.appendChild(benchTime);
 
     return playerDiv;
 }
@@ -162,7 +178,8 @@ endGame.addEventListener("click", () => {
     startGame.disabled = false;
     pauseGame.disabled = true;
     endGame.disabled = true;
-    saveGame.disabled = false;
+    gameTime = 0;
+    updateGameTimeDisplay();
 });
 
 saveGame.addEventListener("click", () => {
