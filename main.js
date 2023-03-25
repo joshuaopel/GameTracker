@@ -20,6 +20,16 @@ const playerNames = ["Alice", "Bob", "Charlie", "David"];
 
 let gameInProgress = false;
 let gamePaused = false;
+let gameTimer;
+let gameTime = 0;
+const gameTimeDisplay = document.getElementById("gameTime");
+
+function updateGameTimeDisplay() {
+    const minutes = Math.floor(gameTime / 60);
+    const seconds = gameTime % 60;
+    gameTimeDisplay.textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+}
+
 
 let players = [];
 
@@ -47,6 +57,14 @@ function updateGameHistory() {
             playerDiv.innerHTML = `${player.name}: ${player.playTime} seconds played as ${player.position}`;
             gameDiv.appendChild(playerDiv);
         });
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete Game";
+        deleteBtn.addEventListener("click", () => {
+            savedGames.splice(index, 1);
+            localStorage.setItem("gameHistory", JSON.stringify(savedGames));
+            updateGameHistory();
+        });
+        gameDiv.appendChild(deleteBtn);
         gameHistory.appendChild(gameDiv);
     });
 }
