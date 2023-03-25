@@ -39,4 +39,67 @@ function updateGameHistory() {
     const savedGames = JSON.parse(localStorage.getItem("gameHistory")) || [];
     gameHistory.innerHTML = "";
     savedGames.forEach((game, index) => {
-       
+        const gameDiv = document.createElement("div");
+        gameDiv.classList.add("game");
+        gameDiv.innerHTML = `<h3>Game ${index + 1}</h3>`;
+        game.players.forEach((player) => {
+            const playerDiv = document.createElement("div");
+            playerDiv.innerHTML = `${player.name}: ${player.playTime} seconds played as ${player.position}`;
+            gameDiv.appendChild(playerDiv);
+        });
+        gameHistory.appendChild(gameDiv);
+    });
+}
+
+function updatePlayerDisplay(player, playerDiv) {
+    playerDiv.innerHTML = `
+        <h3>${player.name}</h3>
+        <button class="togglePlay" ${player.playing ? "disabled" : ""}>Play</button>
+        <select class="position" ${player.playing ? "disabled" : ""}>
+            ${positions.map((pos) => `<option ${player.position === pos ? "selected" : ""}>${pos}</option>`).join("")}
+        </select>
+        <button class="toggleBench" ${!player.playing ? "disabled" : ""}>${player.benchStart ? "Unbench" : "Bench"}</button>
+        <p>Play Time: ${player.playTime} seconds</p>
+        <p>Bench Time: ${player.benchTime} seconds</p>
+    `;
+}
+
+function createPlayerDiv(player) {
+    const playerDiv = document.createElement("div");
+    playerDiv.classList.add("player");
+
+    updatePlayerDisplay(player, playerDiv);
+
+    playerDiv.querySelector(".togglePlay").addEventListener("click", () => {
+        player.playing = true;
+        player.benchStart = null;
+        updatePlayerDisplay(player, playerDiv);
+    });
+
+    playerDiv.querySelector(".position").addEventListener("change", (e) => {
+        player.position = e.target.value;
+    });
+
+    playerDiv.querySelector(".toggleBench").addEventListener("click", () => {
+        if (player.benchStart) {
+            player.benchStart = null;
+        } else {
+            player.benchStart = new Date();
+        }
+        updatePlayerDisplay(player, playerDiv);
+    });
+
+    return playerDiv;
+}
+
+loginBtn.addEventListener("click", () => {
+    if (passwordInput.value === hardcodedPassword) {
+        login.style.display = "none";
+        app.style.display = "block";
+        passwordInput.value = "";
+    } else {
+        alert("Incorrect password!");
+    }
+});
+
+startGame.addEventListener("click", () =>
