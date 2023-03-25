@@ -102,4 +102,71 @@ loginBtn.addEventListener("click", () => {
     }
 });
 
-startGame.addEventListener("click", () =>
+startGame.addEventListener("click", () => {
+    gameInProgress = true;
+    gamePaused = false;
+    startGame.disabled = true;
+    pauseGame.disabled = false;
+    endGame.disabled = false;
+
+    players.forEach((player) => {
+        if (player.playing) {
+            player.benchStart = new Date();
+        }
+    });
+
+    setInterval(() => {
+        if (!gameInProgress || gamePaused) return;
+
+        players.forEach((player, index) => {
+            if (player.playing && !player.benchStart) {
+                player.playTime++;
+            } else if (player.playing && player.benchStart) {
+                player.benchTime++;
+            }
+            updatePlayerDisplay(player, playersDiv.children[index]);
+        });
+    }, 1000);
+});
+
+pauseGame.addEventListener("click", () => {
+    gamePaused = !gamePaused;
+    pauseGame.textContent = gamePaused ? "Resume Game" : "Pause Game";
+});
+
+endGame.addEventListener("click", () => {
+    gameInProgress = false;
+    gamePaused = false;
+    startGame.disabled = false;
+    pauseGame.disabled = true;
+    endGame.disabled = true;
+    saveGame.disabled = false;
+});
+
+saveGame.addEventListener("click", () => {
+    const gameHistoryData = JSON.parse(localStorage.getItem("gameHistory")) || [];
+    const newGameData = {
+        players: JSON.parse(JSON.stringify(players)),
+    };
+    gameHistoryData.push(newGameData);
+    localStorage.setItem("gameHistory", JSON.stringify(gameHistoryData));
+    updateGameHistory();
+
+    players = playerNames.map(createPlayer);
+    playersDiv.innerHTML = "";
+    players.forEach((player) => {
+        const playerDiv = createPlayerDiv(player);
+        playersDiv.appendChild(playerDiv);
+    });
+
+    saveGame.disabled = true;
+});
+
+players = playerNames.map(createPlayer);
+players.forEach((player) => {
+    const playerDiv = createPlayerDiv(player);
+    playersDiv.appendChild(playerDiv);
+});
+
+updateGameHistory();
+
