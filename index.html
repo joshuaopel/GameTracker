@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soccer Roster Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="login-container">
+        <h1>Soccer Roster Tool</h1>
+        <form id="login-form">
+            <label for="passcode">Enter passcode:</label>
+            <input type="password" id="passcode" name="passcode">
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div id="app-container" style="display: none;">
+        <!-- Add your app's HTML structure here -->
+    </div>
+
+    <script src="scripts.js"></script>
+    <!-- Add other scripts -->
+    <script src="playerManager.js"></script>
+    <script src="timerManager.js"></script>
+    <script src="gameManager.js"></script>
+    <script src="indexedDBManager.js"></script>
+    <script src="positionManager.js"></script>
+    <script src="uiManager.js"></script>
+</body>
+</html>
