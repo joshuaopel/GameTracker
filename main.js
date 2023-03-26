@@ -117,11 +117,7 @@ function createPlayerDiv(player) {
         player.position = e.target.value;
     });
 
-    playerDiv.appendChild(playBtn);
-    playerDiv.appendChild(positionSelect);
-    playerDiv.appendChild(benchBtn);
-    playerDiv.appendChild(playTime);
-    playerDiv.appendChild(benchTime);
+  
 
     return playerDiv;
 }
